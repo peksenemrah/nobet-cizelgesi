@@ -5,6 +5,7 @@
 <title>Nöbet Çizelgesi</title>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 :root{--bg:#f1f5f9;--card:#fff;--ink:#0f172a;--muted:#64748b;--accent:#4f46e5;--line:#e2e8f0;
 --a-blok:#dbeafe;--b-blok:#dcfce7;--c-blok:#fef3c7;--czemin:#ffedd5;--bahce:#f3e8ff}
@@ -44,6 +45,9 @@ details.faq:last-child{border-bottom:none}
 details.faq summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--ink)}
 details.faq .ans{font-size:13.5px;color:#334155;line-height:1.55;margin:8px 2px 2px;padding-left:6px;border-left:3px solid #c7d2fe}
 .faqhint{color:var(--muted);font-size:12.5px;margin-top:6px}
+.esas{font-size:13px;line-height:1.6;color:#334155;padding-left:20px;margin:10px 0 4px}
+.esas li{margin:7px 0}
+#wpng{white-space:nowrap}
 .foot{text-align:center;color:var(--muted);font-size:12px;margin:12px 0}
 </style>
 </head>
@@ -55,9 +59,40 @@ details.faq .ans{font-size:13.5px;color:#334155;line-height:1.55;margin:8px 2px 
   <select id="who"><option value="">— Adınızı seçin —</option></select>
   <div id="me"></div>
 </div>
-<div class="card">
-  <div class="wnav"><button id="prev">◀</button><select id="wsel"></select><button id="next">▶</button></div>
+<div class="card" id="weekCard">
+  <div class="wnav"><button id="prev">◀</button><select id="wsel"></select><button id="next">▶</button><button id="wpng" title="Bu haftanın çizelgesini görsel olarak indir">🖼️ İndir</button></div>
   <div id="week"></div>
+</div>
+<div class="card">
+  <b>📜 Nöbetlerde Uygulanacak Esaslar</b>
+  <details class="faq" style="border:none;padding-top:6px"><summary>Esasları görüntülemek için tıklayın (24 madde)</summary>
+  <ol class="esas">
+  <li>Nöbetler okul idaresi tarafından hazırlanan nöbet çizelgelerine uygun olarak tutulur. Bu çizelgelerde kimse kendiliğinden değişiklik yapamaz.</li>
+  <li>Nöbet çizelgesi idarenin onayladığı gün yürürlüğe girer. Nöbet çizelgesi görev mahalline asılır.</li>
+  <li>Nöbetçi öğretmen nöbet süresince zaruri sebepler dışında nöbet yerini terk edemez. Ani ve benzeri mazeretin meydana gelmesi halinde okul idaresinin izni ile nöbeti başka bir öğretmene devredebilir.</li>
+  <li>Nöbet görevine özürsüz olarak gelmeyen öğretmen hakkında, derse özürsüz olarak gelmeyen öğretmen gibi işlem yapılır.</li>
+  <li>Derse başlamadan 20 dk. önce okula gelir ve ders bitiminden 20 dk. sonra okuldan ayrılır.</li>
+  <li>Nöbetçi öğretmen sabah ilk olarak derslikleri kontrol eder, bölümleri denetler ve okulun eğitim öğretime hazır olup olmadığını nöbet defterine yazarak giriş imzasını atar.</li>
+  <li>Nöbetçi öğretmen, o gün gelmeyen öğretmenleri tespit ederek ilgili müdür yardımcısına bildirir, boş geçen derslere girerek defteri "Nöbetçi Öğretmen" yazarak imzalar; öğretmenlerin durumlarını ve boş derslerin nasıl doldurulduğunu nöbet defterine geçirir.</li>
+  <li>Nöbeti sonunda nöbet defterine nöbeti süresi içindeki önemli olayları ve aldığı önlemleri belirten raporu yazar ve imzalar. Ayrıca tutanak tutulması gereken durumlarda tutanak tutar.</li>
+  <li>Nöbetçi öğretmenler öğle arasında dönüşümlü olarak görev yerlerinde olacaklardır.</li>
+  <li>Nöbet çizelgesinde kendisine verilen görev yerinde bulunan öğrencilerin nöbeti süresince eğitim, öğretim ve disiplin gibi çeşitli işlerini izler ve bu hususlarda günlük önlemleri alır.</li>
+  <li>Beklenmedik olaylar karşısında (yaralanma, kaza vb.) gerekli önlemleri alır, öğrenci velisine ivedilikle haber verir, ilgili müdür yardımcısını bilgilendirir.</li>
+  <li>Günlük zaman çizelgesini uygular.</li>
+  <li>Sabah ilk girişte öğrencilerin düzenli olarak sınıflara girmelerini, derslere zamanında giriş-çıkışları için gerekli tedbirleri alır ve son ders çıkışında öğrencilerin okulu boşaltmalarını organize eder, kapıda ve koridorlarda yığılmaları önler.</li>
+  <li>Nöbet bölgesindeki tüm öğrenciler sınıflara girmeden nöbet bölgesini terk etmez.</li>
+  <li>Nöbetçi öğretmen teneffüslerde zil çalar çalmaz görev yerine gider ve öğretmen zili çaldıktan / tüm öğretmenler derse girdikten sonra nöbet yerini terk eder.</li>
+  <li>Ders zili çaldığında derse zamanında girmeyenleri, girmemekte ısrar edenleri nöbet defterine yazar ve okul yönetimine bildirir.</li>
+  <li>Okula gelen/gidenlerin durumlarıyla ilgilenir, gerekli durumda velilere ve ziyaretçilere rehberlik eder.</li>
+  <li>Öğrencilerin okul bahçesi dışına çıkmamasını sağlar, çıkanları tespit edip okul idaresine bildirir.</li>
+  <li>Nöbetçi öğretmen görev bölgesinde aktif ve müdahil bir nöbet görevi yerine getirir. Sınıfları dolaşır, öğrencilerin camlardan sarkmalarını engeller, kapıların açık kalmasını sağlar, lavaboları kontrol eder ve rüzgârlı, yağmurlu ve karlı havalarda gerekli önlemleri alır.</li>
+  <li>Nöbetçi öğretmen; hali, davranışları, kıyafetleri uygun olmayan öğrencileri uyarır. Öğrencilerden takı, kolye, yüzük vs. takanları uyarır, kız öğrencilerin saçlarının toplu olması hususunda öğrencileri bilgilendirir.</li>
+  <li>Isınma, elektrik tesisleri ile sıhhî tesisatların çalışıp çalışmadığını, okul içi temizliğinin yapılıp yapılmadığını, günlük kontrolünü yapar, eksiklikleri ilgililere bildirir.</li>
+  <li>Bayrak törenlerinin zamanında ve gereken önemin verilerek yapılmasını sağlar.</li>
+  <li>Nöbetçi öğrencinin görevinin yapılmasını sağlar.</li>
+  <li>Okulun eğitim, öğretim ve disiplin gibi işlerinin düzenli olarak yürütülmesinde okul yöneticilerine yardımcı olur.</li>
+  </ol>
+  </details>
 </div>
 <div class="card">
   <b>❓ Sıkça Sorulan Sorular</b>
@@ -227,6 +262,23 @@ wsel.value=cur;
 wsel.addEventListener('change',function(){cur=+wsel.value;renderWeek();});
 document.getElementById('prev').addEventListener('click',function(){if(cur>0){cur--;wsel.value=cur;renderWeek();}});
 document.getElementById('next').addEventListener('click',function(){if(cur<weeks.length-1){cur++;wsel.value=cur;renderWeek();}});
+document.getElementById('wpng').addEventListener('click',function(){
+  if(typeof html2canvas==='undefined'){alert('Görsel indirmek için internet bağlantısı gerekiyor.');return;}
+  var card=document.getElementById('weekCard');
+  var nav=card.querySelector('.wnav');
+  var hdr=document.createElement('div');
+  hdr.style.cssText='text-align:center;font-weight:700;padding:4px 0 12px;font-size:15px';
+  hdr.textContent=(DATA.school?DATA.school+' — ':'')+'Nöbet Çizelgesi • '+wsel.options[wsel.selectedIndex].text;
+  nav.style.display='none';
+  card.insertBefore(hdr,card.firstChild);
+  html2canvas(card,{scale:2,backgroundColor:'#ffffff'}).then(function(cv){
+    var a=document.createElement('a');
+    a.download='nobet_'+(cur+1)+'_hafta.png';
+    a.href=cv.toDataURL('image/png');
+    a.click();
+    nav.style.display='';hdr.remove();
+  }).catch(function(){nav.style.display='';hdr.remove();alert('Görsel oluşturulamadı.');});
+});
 function renderWeek(){
   var w=weeks[cur],box=document.getElementById('week'),meId=who.value;
   var allHol=w.days.every(function(d){return HM[d];});
