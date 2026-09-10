@@ -2105,6 +2105,7 @@ function ask(qq){usr(qq);setTimeout(function(){bot(reply(qq));},180);}
 document.getElementById('asend').addEventListener('click',function(){var v=ain.value.trim();if(!v)return;ain.value='';ask(v);});
 ain.addEventListener('keydown',function(e){if(e.key==='Enter'){var v=ain.value.trim();if(!v)return;ain.value='';ask(v);}});
 bot('Merhaba! 👋 Ben <b>nöbet asistanı</b>. Çizelge verilerine bakarak sorularınızı yanıtlarım. Sayfanın üstünden adınızı seçerseniz cevaplarım size özel olur.');
+setTimeout(function(){panel.classList.add('open');},700);
 window.__asstReply=reply;
 })();
 }
