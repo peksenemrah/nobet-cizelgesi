@@ -2034,6 +2034,40 @@ function reply(qraw){
     }
     return 'Adınızı sayfanın üstünden seçin veya öğretmen adıyla sorun (örn: Salih Sevgi ne zaman nöbetçi?).';
   }
+  if(has('fazla','daha cok','daha az','en cok','en az','esit')&&has('nobet','tutan')){
+    function totalsList(g){
+      var gs3=groupStats(g);
+      return DATA.teachers.filter(function(t){return t.group===g;}).map(function(t){return {t:t,n:gs3.totals[t.id]||0};}).sort(function(a,b){return b.n-a.n||a.t.name.localeCompare(b.t.name,'tr');});
+    }
+    function fmtList(arr){
+      var s=arr.slice(0,20).map(function(x){return esc(x.t.name)+' ('+x.n+')';}).join(', ');
+      if(arr.length>20)s+=' … (+'+(arr.length-20)+' kişi)';
+      return s;
+    }
+    var noteA='<br><br>Not: A Blok öğretmenleri yalnız A Blok alanında görev yapabildiği için her hafta 2-3 nöbet tutar; toplamlarının yüksek olması bu özel durumdandır. B ve C bloklarda toplamlar kendi içinde dengelenir.';
+    if(T&&has('benden')){
+      var lst=totalsList(T.group),my=0;
+      lst.forEach(function(x){if(x.t.id===T.id)my=x.n;});
+      var more=lst.filter(function(x){return x.n>my&&x.t.id!==T.id;});
+      var less=lst.filter(function(x){return x.n<my;});
+      var eq=lst.filter(function(x){return x.n===my&&x.t.id!==T.id;});
+      var h3='<b>'+esc(T.name)+'</b>: '+my+' nöbet ('+T.group+').';
+      if(has('az')&&!has('fazla')){
+        h3+='<br><br>Sizden az tutan '+less.length+' öğretmen'+(less.length?': '+fmtList(less):' yok.');
+      }else{
+        h3+='<br><br>Sizden fazla tutan '+more.length+' öğretmen'+(more.length?': '+fmtList(more):' yok — grubunuzda en yüksek sayı sizde.');
+      }
+      h3+='<br>Sizinle eşit: '+eq.length+' öğretmen.'+(more.some(function(x){return x.t.block==='A';})?noteA:'');
+      return h3;
+    }
+    var h4='';
+    groups.forEach(function(g){
+      var lst2=totalsList(g);
+      if(!lst2.length)return;
+      h4+='<u>'+esc(SHIFT[g]||g)+'</u><br>En çok: '+fmtList(lst2.slice(0,3))+'<br>En az: '+fmtList(lst2.slice(-3).reverse())+'<br><br>';
+    });
+    return h4+'Adınızı seçip "benden fazla nöbet tutanlar" diye sorarsanız kişisel karşılaştırma yaparım.'+noteA;
+  }
   if(has('kac nobet','toplam','listele','hepsi','tum nobet','butun nobet','nobetlerim')){
     if(!T)return 'Adınızı seçerseniz tüm nöbetlerinizi listeleyebilirim.';
     var its3=itemsOf(T),gs2=groupStats(T.group);
