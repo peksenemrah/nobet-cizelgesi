@@ -49,6 +49,24 @@ details.faq .ans{font-size:13.5px;color:#334155;line-height:1.55;margin:8px 2px 
 .esas li{margin:7px 0}
 #wpng{white-space:nowrap}
 .foot{text-align:center;color:var(--muted);font-size:12px;margin:12px 0}
+#asstBtn{position:fixed;right:16px;bottom:16px;width:58px;height:58px;border-radius:50%;background:var(--accent);color:#fff;font-size:26px;border:none;box-shadow:0 4px 16px rgba(79,70,229,.45);cursor:pointer;z-index:60;line-height:1}
+#asstBtn:hover{transform:scale(1.06)}
+#asst{position:fixed;top:0;right:0;height:100%;width:390px;max-width:100%;background:#fff;border-left:1px solid var(--line);box-shadow:-8px 0 28px rgba(15,23,42,.14);transform:translateX(105%);transition:transform .25s ease;z-index:70;display:flex;flex-direction:column}
+#asst.open{transform:translateX(0)}
+.ahead{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line);background:#f8fafc}
+.ahead b{font-size:15px}
+.ahead button{border:none;background:none;font-size:20px;cursor:pointer;color:var(--muted);padding:2px 8px}
+#amsgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:#fbfcfe}
+.mb,.mu{max-width:88%;padding:9px 12px;border-radius:12px;font-size:13.5px;line-height:1.55;word-break:break-word}
+.mb{background:#eef2ff;border:1px solid #c7d2fe;align-self:flex-start;border-bottom-left-radius:4px}
+.mu{background:var(--accent);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+#achips{padding:8px 10px;display:flex;flex-wrap:wrap;gap:6px;border-top:1px solid var(--line);background:#fff}
+#achips button{font-size:11.5px;padding:5px 10px;border-radius:999px;background:#eef2ff;border:1px solid #c7d2fe;cursor:pointer;color:#3730a3}
+#achips button:hover{background:#e0e7ff}
+.arow{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line);background:#fff}
+.arow input{flex:1;min-width:0;font:inherit;padding:9px 11px;border:1px solid var(--line);border-radius:9px}
+.arow button{background:var(--accent);color:#fff;border:none;border-radius:9px;padding:9px 14px}
+@media print{#asstBtn,#asst{display:none}}
 </style>
 </head>
 <body>
@@ -101,6 +119,13 @@ details.faq .ans{font-size:13.5px;color:#334155;line-height:1.55;margin:8px 2px 
 </div>
 <div class="foot" id="gen"></div>
 </main>
+<button id="asstBtn" title="Nöbet Asistanı">💬</button>
+<div id="asst">
+  <div class="ahead"><b>🤖 Nöbet Asistanı</b><button id="asstClose" title="Kapat">✕</button></div>
+  <div id="amsgs"></div>
+  <div id="achips"></div>
+  <div class="arow"><input id="ain" placeholder="Sorunuzu yazın..."><button id="asend">Gönder</button></div>
+</div>
 <script>
 var DATA={"school":"Cevdet Güçlüer İlkokulu","term":{"name":"2026-2027 Eğitim Öğretim Yılı 1. Dönem","start":"2026-09-14","end":"2027-01-22","group":"Her iki grup"},"holidays":[{"date":"2026-10-29","label":"Cumhuriyet Bayramı"},{"date":"2026-11-16","label":"1. Dönem Ara Tatili"},{"date":"2026-11-17","label":"1. Dönem Ara Tatili"},{"date":"2026-11-18","label":"1. Dönem Ara Tatili"},{"date":"2026-11-19","label":"1. Dönem Ara Tatili"},{"date":"2026-11-20","label":"1. Dönem Ara Tatili"},{"date":"2027-01-01","label":"Yılbaşı Tatili"},{"date":"2027-01-25","label":"Yarıyıl Tatili"},{"date":"2027-01-26","label":"Yarıyıl Tatili"},{"date":"2027-01-27","label":"Yarıyıl Tatili"},{"date":"2027-01-28","label":"Yarıyıl Tatili"},{"date":"2027-01-29","label":"Yarıyıl Tatili"},{"date":"2027-02-01","label":"Yarıyıl Tatili"},{"date":"2027-02-02","label":"Yarıyıl Tatili"},{"date":"2027-02-03","label":"Yarıyıl Tatili"},{"date":"2027-02-04","label":"Yarıyıl Tatili"},{"date":"2027-02-05","label":"Yarıyıl Tatili"},{"date":"2027-03-08","label":"Ramazan Bayramı ve 2. Dönem Ara Tatili"},{"date":"2027-03-09","label":"Ramazan Bayramı ve 2. Dönem Ara Tatili"},{"date":"2027-03-10","label":"Ramazan Bayramı ve 2. Dönem Ara Tatili"},{"date":"2027-03-11","label":"Ramazan Bayramı ve 2. Dönem Ara Tatili"},{"date":"2027-03-12","label":"Ramazan Bayramı ve 2. Dönem Ara Tatili"},{"date":"2027-04-23","label":"23 Nisan Ulusal Egemenlik ve Çocuk Bayramı"},{"date":"2027-05-17","label":"Kurban Bayramı"},{"date":"2027-05-18","label":"Kurban Bayramı"},{"date":"2027-05-19","label":"Kurban Bayramı / 19 Mayıs"}],"teachers":[{"id":"t1","name":"Sevilay İleri","block":"A","group":"Sabahçı"},{"id":"t2","name":"Sevcan TİMUÇİN KARTAL","block":"A","group":"Sabahçı"},{"id":"t4","name":"Nurcan ÖZTAYŞİ","block":"A","group":"Öğlenci"},{"id":"t5","name":"Sevcan ÇINAR","block":"A","group":"Öğlenci"},{"id":"t6","name":"Arzu ŞAHİN GÜR","block":"A","group":"Öğlenci"},{"id":"t7","name":"Demet GÜLEÇ","block":"A","group":"Öğlenci"},{"id":"t8","name":"Özlem ERAVCI","block":"C","group":"Öğlenci"},{"id":"t9","name":"Aysel ÖTENEN","block":"C","group":"Öğlenci"},{"id":"t10","name":"Neşe DİLBER","block":"C","group":"Öğlenci"},{"id":"t11","name":"Salih SEVGİ","block":"C","group":"Öğlenci"},{"id":"t12","name":"Tuna DOĞRU","block":"C","group":"Öğlenci"},{"id":"t13","name":"Güldemet ÇALIŞKAN","block":"C","group":"Öğlenci"},{"id":"t14","name":"İlknur AKIN","block":"C","group":"Öğlenci"},{"id":"t15","name":"Aylin TÜRKKOLU","block":"B","group":"Sabahçı"},{"id":"t16","name":"Derya AKTAŞ SAVAŞIR","block":"B","group":"Sabahçı"},{"id":"t17","name":"Sevgi ÖZTÜRK","block":"B","group":"Sabahçı"},{"id":"t18","name":"Feride Nur AKTAN","block":"B","group":"Sabahçı"},{"id":"t19","name":"Ebrar Rukiye DOĞAN","block":"B","group":"Sabahçı"},{"id":"t20","name":"Ekin ÖLMEZ","block":"B","group":"Sabahçı"},{"id":"t21","name":"Ümit BAL","block":"B","group":"Sabahçı"},{"id":"t22","name":"Arzu AKGÜNER","block":"C","group":"Sabahçı"},{"id":"t23","name":"Sevgi AYYILDIZ","block":"C","group":"Sabahçı"},{"id":"t24","name":"Ahmet AYYILDIZ","block":"C","group":"Sabahçı"},{"id":"t25","name":"Nihal ERMEZ","block":"C","group":"Sabahçı"},{"id":"t26","name":"Atay AKPINAR","block":"C","group":"Sabahçı"},{"id":"t27","name":"Eda ARPACI","block":"C","group":"Sabahçı"},{"id":"t28","name":"Aylin KARAAHMET","block":"C","group":"Sabahçı"},{"id":"t29","name":"Ezo KUNT","block":"B","group":"Öğlenci"},{"id":"t30","name":"Eylül DEMİR AL","block":"B","group":"Öğlenci"},{"id":"t31","name":"Gül ALİBAŞ SÜTÇÜ","block":"B","group":"Öğlenci"},{"id":"t32","name":"Işıl KELEŞ SABANCI","block":"B","group":"Öğlenci"},{"id":"t33","name":"Müşerref BOZDAĞ","block":"B","group":"Öğlenci"},{"id":"t34","name":"Emel SERT","block":"B","group":"Öğlenci"},{"id":"t35","name":"İlkay AYDEMİR","block":"B","group":"Öğlenci"},{"id":"t36","name":"Kıymet EROL TECİM","block":"C","group":"Sabahçı"},{"id":"t37","name":"Yasin ERBULUNDU","block":"B","group":"Öğlenci"},{"id":"t38","name":"Saadet ATA SUCU","block":"C","group":"Sabahçı"},{"id":"t39","name":"İbrahim GÜÇLÜ","block":"C","group":"Sabahçı"},{"id":"t40","name":"Berrin MADAN","block":"C","group":"Sabahçı"},{"id":"t41","name":"Arife YILMAZ","block":"C","group":"Öğlenci"}],"schedules":{"Sabahçı":{"2026-09-14":{"A Blok":["t1"],"B Blok":["t15"],"C Blok":["t25"],"C Blok Zemin":["t40"],"Bahçe":["t17"]},"2026-09-15":{"A Blok":["t2"],"B Blok":["t16"],"C Blok":["t26"],"C Blok Zemin":["t39"],"Bahçe":["t21"]},"2026-09-16":{"A Blok":["t1"],"B Blok":["t17"],"C Blok":["t22"],"C Blok Zemin":["t27"],"Bahçe":["t38"]},"2026-09-17":{"A Blok":["t2"],"B Blok":["t18"],"C Blok":["t23"],"C Blok Zemin":["t28"],"Bahçe":["t20"]},"2026-09-18":{"A Blok":["t1"],"B Blok":["t19"],"C Blok":["t24"],"C Blok Zemin":["t36"],"Bahçe":["t16"]},"2026-09-21":{"A Blok":["t2"],"B Blok":["t15"],"C Blok":["t40"],"C Blok Zemin":["t25"],"Bahçe":["t19"]},"2026-09-22":{"A Blok":["t1"],"B Blok":["t16"],"C Blok":["t39"],"C Blok Zemin":["t26"],"Bahçe":["t21"]},"2026-09-23":{"A Blok":["t2"],"B Blok":["t17"],"C Blok":["t27"],"C Blok Zemin":["t22"],"Bahçe":["t38"]},"2026-09-24":{"A Blok":["t1"],"B Blok":["t18"],"C Blok":["t28"],"C Blok Zemin":["t23"],"Bahçe":["t20"]},"2026-09-25":{"A Blok":["t2"],"B Blok":["t19"],"C Blok":["t36"],"C Blok Zemin":["t24"],"Bahçe":["t21"]},"2026-09-28":{"A Blok":["t1"],"B Blok":["t15"],"C Blok":["t25"],"C Blok Zemin":["t40"],"Bahçe":["t27"]},"2026-09-29":{"A Blok":["t2"],"B Blok":["t16"],"C Blok":["t26"],"C Blok Zemin":["t39"],"Bahçe":["t21"]},"2026-09-30":{"A Blok":["t1"],"B Blok":["t17"],"C Blok":["t22"],"C Blok Zemin":["t27"],"Bahçe":["t38"]},"2026-10-01":{"A Blok":["t2"],"B Blok":["t18"],"C Blok":["t23"],"C Blok Zemin":["t28"],"Bahçe":["t20"]},"2026-10-02":{"A Blok":["t1"],"B Blok":["t19"],"C Blok":["t24"],"C Blok Zemin":["t36"],"Bahçe":["t38"]},"2026-10-05":{"A Blok":["t2"],"B Blok":["t15"],"C Blok":["t40"],"C Blok Zemin":["t25"],"Bahçe":["t28"]},"2026-10-06":{"A Blok":["t1"],"B Blok":["t16"],"C Blok":["t39"],"C Blok Zemin":["t26"],"Bahçe":["t21"]},"2026-10-07":{"A Blok":["t2"],"B Blok":["t17"],"C Blok":["t27"],"C Blok Zemin":["t22"],"Bahçe":["t38"]},"2026-10-08":{"A Blok":["t1"],"B Blok":["t18"],"C Blok":["t28"],"C Blok Zemin":["t23"],"Bahçe":["t20"]},"2026-10-09":{"A Blok":["t2"],"B Blok":["t19"],"C Blok":["t36"],"C Blok Zemin":["t24"],"Bahçe":["t26"]},"2026-10-12":{"A Blok":["t1"],"B Blok":["t15"],"C Blok":["t25"],"C Blok Zemin":["t40"],"Bahçe":["t20"]},"2026-10-13":{"A Blok":["t2"],"B Blok":["t16"],"C Blok":["t26"],"C Blok Zemin":["t39"],"Bahçe":["t21"]},"2026-10-14":{"A Blok":["t1"],"B Blok":["t17"],"C Blok":["t22"],"C Blok Zemin":["t27"],"Bahçe":["t38"]},"2026-10-15":{"A Blok":["t2"],"B Blok":["t18"],"C Blok":["t23"],"C Blok Zemin":["t28"],"Bahçe":["t20"]},"2026-10-16":{"A Blok":["t1"],"B Blok":["t19"],"C Blok":["t24"],"C Blok Zemin":["t36"],"Bahçe":["t15"]},"2026-10-19":{"A Blok":["t2"],"B Blok":["t15"],"C Blok":["t40"],"C Blok Zemin":["t25"],"Bahçe":["t23"]},"2026-10-20":{"A Blok":["t1"],"B Blok":["t16"],"C Blok":["t39"],"C Blok Zemin":["t26"],"Bahçe":["t21"]},"2026-10-21":{"A Blok":["t2"],"B Blok":["t17"],"C Blok":["t27"],"C Blok Zemin":["t22"],"Bahçe":["t38"]},"2026-10-22":{"A Blok":["t1"],"B Blok":["t18"],"C Blok":["t28"],"C Blok Zemin":["t23"],"Bahçe":["t20"]},"2026-10-23":{"A Blok":["t2"],"B Blok":["t19"],"C Blok":["t36"],"C Blok Zemin":["t24"],"Bahçe":["t40"]},"2026-10-26":{"A Blok":["t1"],"B Blok":["t15"],"C Blok":["t25"],"C Blok Zemin":["t40"],"Bahçe":["t20"]},"2026-10-27":{"A Blok":["t2"],"B Blok":["t16"],"C Blok":["t26"],"C Blok Zemin":["t39"],"Bahçe":["t21","t23"]},"2026-10-28":{"A Blok":["t1"],"B Blok":["t17"],"C Blok":["t22"],"C Blok Zemin":["t27"],"Bahçe":["t38"]},"2026-10-30":{"A Blok":["t2"],"B Blok":["t19"],"C Blok":["t24"],"C Blok Zemin":["t36"],"Bahçe":["t18","t28"]},"2026-11-02":{"A Blok":["t1"],"B Blok":["t15"],"C Blok":["t40"],"C Blok Zemin":["t25"],"Bahçe":["t36"]},"2026-11-03":{"A Blok":["t2"],"B Blok":["t16"],"C Blok":["t39"],"C Blok Zemin":["t26"],"Bahçe":["t21"]},"2026-11-04":{"A Blok":["t1"],"B Blok":["t17"],"C Blok":["t27"],"C Blok Zemin":["t22"],"Bahçe":["t38"]},"2026-11-05":{"A Blok":["t2"],"B Blok":["t18"],"C Blok":["t23"],"C Blok Zemin":["t28"],"Bahçe":["t20"]},"2026-11-06":{"A Blok":["t1"],"B Blok":["t19"],"C Blok":["t36"],"C Blok Zemin":["t24"],"Bahçe":["t25"]},"2026-11-09":{"A Blok":["t2"],"B Blok":["t15"],"C Blok":["t25"],"C Blok Zemin":["t40"],"Bahçe":["t22"]},"2026-11-10":{"A Blok":["t1"],"B Blok":["t16"],"C Blok":["t26"],"C Blok Zemin":["t39"],"Bahçe":["t21"]},"2026-11-11":{"A Blok":["t2"],"B Blok":["t17"],"C Blok":["t22"],"C Blok Zemin":["t39"],"Bahçe":["t38"]},"2026-11-12":{"A Blok":["t1"],"B Blok":["t18"],"C Blok":["t28"],"C Blok Zemin":["t23"],"Bahçe":["t20"]},"2026-11-13":{"A Blok":["t2"],"B Blok":["t19"],"C Blok":["t24"],"C Blok Zemin":["t36"],"Bahçe":["t27"]},"2026-11-23":{"A Blok":["t1"],"B Blok":["t15"],"C Blok":["t40"],"C Blok Zemin":["t25"],"Bahçe":["t18"]},"2026-11-24":{"A Blok":["t2"],"B Blok":["t16"],"C Blok":["t39"],"C Blok Zemin":["t26"],"Bahçe":["t21"]},"2026-11-25":{"A Blok":["t1"],"B Blok":["t17"],"C Blok":["t27"],"C Blok Zemin":["t22"],"Bahçe":["t38"]},"2026-11-26":{"A Blok":["t2"],"B Blok":["t18"],"C Blok":["t23"],"C Blok Zemin":["t28"],"Bahçe":["t20"]},"2026-11-27":{"A Blok":["t1"],"B Blok":["t19"],"C Blok":["t36"],"C Blok Zemin":["t24"],"Bahçe":["t16"]},"2026-11-30":{"A Blok":["t2"],"B Blok":["t15"],"C Blok":["t25"],"C Blok Zemin":["t40"],"Bahçe":["t24"]},"2026-12-01":{"A Blok":["t1"],"B Blok":["t16"],"C Blok":["t26"],"C Blok Zemin":["t39"],"Bahçe":["t21"]},"2026-12-02":{"A Blok":["t2"],"B Blok":["t17"],"C Blok":["t22"],"C Blok Zemin":["t27"],"Bahçe":["t38"]},"2026-12-03":{"A Blok":["t1"],"B Blok":["t18"],"C Blok":["t28"],"C Blok Zemin":["t23"],"Bahçe":["t20"]},"2026-12-04":{"A Blok":["t2"],"B Blok":["t19"],"C Blok":["t24"],"C Blok Zemin":["t36"],"Bahçe":["t21"]},"2026-12-07":{"A Blok":["t1"],"B Blok":["t15"],"C Blok":["t40"],"C Blok Zemin":["t25"],"Bahçe":["t19"]},"2026-12-08":{"A Blok":["t2"],"B Blok":["t16"],"C Blok":["t39"],"C Blok Zemin":["t26"],"Bahçe":["t21"]},"2026-12-09":{"A Blok":["t1"],"B Blok":["t17"],"C Blok":["t27"],"C Blok Zemin":["t22"],"Bahçe":["t38"]},"2026-12-10":{"A Blok":["t2"],"B Blok":["t18"],"C Blok":["t23"],"C Blok Zemin":["t28"],"Bahçe":["t20"]},"2026-12-11":{"A Blok":["t1"],"B Blok":["t19"],"C Blok":["t36"],"C Blok Zemin":["t24"],"Bahçe":["t27"]},"2026-12-14":{"A Blok":["t2"],"B Blok":["t15"],"C Blok":["t25"],"C Blok Zemin":["t40"],"Bahçe":["t28"]},"2026-12-15":{"A Blok":["t1"],"B Blok":["t16"],"C Blok":["t26"],"C Blok Zemin":["t39"],"Bahçe":["t21"]},"2026-12-16":{"A Blok":["t2"],"B Blok":["t17"],"C Blok":["t22"],"C Blok Zemin":["t27"],"Bahçe":["t38"]},"2026-12-17":{"A Blok":["t1"],"B Blok":["t18"],"C Blok":["t28"],"C Blok Zemin":["t23"],"Bahçe":["t20"]},"2026-12-18":{"A Blok":["t2"],"B Blok":["t19"],"C Blok":["t24"],"C Blok Zemin":["t36"],"Bahçe":["t38"]},"2026-12-21":{"A Blok":["t1"],"B Blok":["t15"],"C Blok":["t40"],"C Blok Zemin":["t25"],"Bahçe":["t20"]},"2026-12-22":{"A Blok":["t2"],"B Blok":["t16"],"C Blok":["t39"],"C Blok Zemin":["t26"],"Bahçe":["t21"]},"2026-12-23":{"A Blok":["t1"],"B Blok":["t17"],"C Blok":["t27"],"C Blok Zemin":["t22"],"Bahçe":["t38"]},"2026-12-24":{"A Blok":["t2"],"B Blok":["t18"],"C Blok":["t23"],"C Blok Zemin":["t28"],"Bahçe":["t20"]},"2026-12-25":{"A Blok":["t1"],"B Blok":["t19"],"C Blok":["t36"],"C Blok Zemin":["t24"],"Bahçe":["t26"]},"2026-12-28":{"A Blok":["t2"],"B Blok":["t15"],"C Blok":["t25"],"C Blok Zemin":["t40"],"Bahçe":["t19"]},"2026-12-29":{"A Blok":["t1"],"B Blok":["t16"],"C Blok":["t26"],"C Blok Zemin":["t39"],"Bahçe":["t21","t24"]},"2026-12-30":{"A Blok":["t2"],"B Blok":["t17"],"C Blok":["t22"],"C Blok Zemin":["t27"],"Bahçe":["t38","t36"]},"2026-12-31":{"A Blok":["t1"],"B Blok":["t18"],"C Blok":["t28"],"C Blok Zemin":["t23"],"Bahçe":["t20"]},"2027-01-04":{"A Blok":["t2"],"B Blok":["t15"],"C Blok":["t40"],"C Blok Zemin":["t25"],"Bahçe":["t23"]},"2027-01-05":{"A Blok":["t1"],"B Blok":["t16"],"C Blok":["t39"],"C Blok Zemin":["t26"],"Bahçe":["t21"]},"2027-01-06":{"A Blok":["t2"],"B Blok":["t17"],"C Blok":["t27"],"C Blok Zemin":["t22"],"Bahçe":["t38"]},"2027-01-07":{"A Blok":["t1"],"B Blok":["t18"],"C Blok":["t23"],"C Blok Zemin":["t28"],"Bahçe":["t20"]},"2027-01-08":{"A Blok":["t2"],"B Blok":["t19"],"C Blok":["t24"],"C Blok Zemin":["t36"],"Bahçe":["t15"]},"2027-01-11":{"A Blok":["t1"],"B Blok":["t15"],"C Blok":["t25"],"C Blok Zemin":["t40"],"Bahçe":["t36"]},"2027-01-12":{"A Blok":["t2"],"B Blok":["t16"],"C Blok":["t26"],"C Blok Zemin":["t39"],"Bahçe":["t21"]},"2027-01-13":{"A Blok":["t1"],"B Blok":["t17"],"C Blok":["t22"],"C Blok Zemin":["t27"],"Bahçe":["t38"]},"2027-01-14":{"A Blok":["t2"],"B Blok":["t18"],"C Blok":["t28"],"C Blok Zemin":["t23"],"Bahçe":["t20"]},"2027-01-15":{"A Blok":["t1"],"B Blok":["t19"],"C Blok":["t36"],"C Blok Zemin":["t24"],"Bahçe":["t40"]},"2027-01-18":{"A Blok":["t2"],"B Blok":["t15"],"C Blok":["t40"],"C Blok Zemin":["t25"],"Bahçe":["t22"]},"2027-01-19":{"A Blok":["t1"],"B Blok":["t16"],"C Blok":["t39"],"C Blok Zemin":["t26"],"Bahçe":["t21"]},"2027-01-20":{"A Blok":["t2"],"B Blok":["t17"],"C Blok":["t27"],"C Blok Zemin":["t22"],"Bahçe":["t38"]},"2027-01-21":{"A Blok":["t1"],"B Blok":["t18"],"C Blok":["t23"],"C Blok Zemin":["t28"],"Bahçe":["t20"]},"2027-01-22":{"A Blok":["t2"],"B Blok":["t19"],"C Blok":["t24"],"C Blok Zemin":["t36"],"Bahçe":["t25"]}},"Öğlenci":{"2026-09-14":{"A Blok":["t4"],"B Blok":["t32"],"C Blok":["t8"],"C Blok Zemin":["t12"],"Bahçe":["t35"]},"2026-09-15":{"A Blok":["t5"],"B Blok":["t30"],"C Blok":["t9"],"C Blok Zemin":["t14"],"Bahçe":["t33"]},"2026-09-16":{"A Blok":["t6"],"B Blok":["t29"],"C Blok":["t10"],"C Blok Zemin":["t41"],"Bahçe":["t34"]},"2026-09-17":{"A Blok":["t7"],"B Blok":["t35"],"C Blok":["t11"],"C Blok Zemin":["t13"],"Bahçe":["t37"]},"2026-09-18":{"A Blok":["t4"],"B Blok":["t31"],"C Blok":["t12"],"C Blok Zemin":["t8"],"Bahçe":["t32"]},"2026-09-21":{"A Blok":["t5"],"B Blok":["t32"],"C Blok":["t10"],"C Blok Zemin":["t8"],"Bahçe":["t31"]},"2026-09-22":{"A Blok":["t6"],"B Blok":["t30"],"C Blok":["t14"],"C Blok Zemin":["t9"],"Bahçe":["t33"]},"2026-09-23":{"A Blok":["t7"],"B Blok":["t29"],"C Blok":["t41"],"C Blok Zemin":["t10"],"Bahçe":["t34"]},"2026-09-24":{"A Blok":["t4"],"B Blok":["t35"],"C Blok":["t13"],"C Blok Zemin":["t11"],"Bahçe":["t37"]},"2026-09-25":{"A Blok":["t5"],"B Blok":["t31"],"C Blok":["t12"],"C Blok Zemin":["t41"],"Bahçe":["t33"]},"2026-09-28":{"A Blok":["t6"],"B Blok":["t32"],"C Blok":["t8"],"C Blok Zemin":["t11"],"Bahçe":["t34"]},"2026-09-29":{"A Blok":["t7"],"B Blok":["t30"],"C Blok":["t9"],"C Blok Zemin":["t14"],"Bahçe":["t33"]},"2026-09-30":{"A Blok":["t4"],"B Blok":["t29"],"C Blok":["t41"],"C Blok Zemin":["t10"],"Bahçe":["t34"]},"2026-10-01":{"A Blok":["t5"],"B Blok":["t35"],"C Blok":["t11"],"C Blok Zemin":["t13"],"Bahçe":["t37"]},"2026-10-02":{"A Blok":["t6"],"B Blok":["t31"],"C Blok":["t14"],"C Blok Zemin":["t12"],"Bahçe":["t30"]},"2026-10-05":{"A Blok":["t7"],"B Blok":["t32"],"C Blok":["t13"],"C Blok Zemin":["t8"],"Bahçe":["t30"]},"2026-10-06":{"A Blok":["t4"],"B Blok":["t37"],"C Blok":["t14"],"C Blok Zemin":["t9"],"Bahçe":["t33"]},"2026-10-07":{"A Blok":["t5"],"B Blok":["t29"],"C Blok":["t10"],"C Blok Zemin":["t41"],"Bahçe":["t34"]},"2026-10-08":{"A Blok":["t6"],"B Blok":["t35"],"C Blok":["t11"],"C Blok Zemin":["t13"],"Bahçe":["t37"]},"2026-10-09":{"A Blok":["t7"],"B Blok":["t31"],"C Blok":["t12"],"C Blok Zemin":["t9"],"Bahçe":["t29"]},"2026-10-12":{"A Blok":["t4"],"B Blok":["t32"],"C Blok":["t8"],"C Blok Zemin":["t12"],"Bahçe":["t35"]},"2026-10-13":{"A Blok":["t5"],"B Blok":["t30"],"C Blok":["t9"],"C Blok Zemin":["t14"],"Bahçe":["t33"]},"2026-10-14":{"A Blok":["t6"],"B Blok":["t29"],"C Blok":["t41"],"C Blok Zemin":["t10"],"Bahçe":["t34"]},"2026-10-15":{"A Blok":["t7"],"B Blok":["t35"],"C Blok":["t13"],"C Blok Zemin":["t11"],"Bahçe":["t37"]},"2026-10-16":{"A Blok":["t4"],"B Blok":["t31"],"C Blok":["t8"],"C Blok Zemin":["t12"],"Bahçe":["t33"]},"2026-10-19":{"A Blok":["t5"],"B Blok":["t32"],"C Blok":["t10"],"C Blok Zemin":["t8"],"Bahçe":["t31"]},"2026-10-20":{"A Blok":["t6"],"B Blok":["t30"],"C Blok":["t14"],"C Blok Zemin":["t9"],"Bahçe":["t33"]},"2026-10-21":{"A Blok":["t7"],"B Blok":["t29"],"C Blok":["t10"],"C Blok Zemin":["t41"],"Bahçe":["t34"]},"2026-10-22":{"A Blok":["t4"],"B Blok":["t35"],"C Blok":["t11"],"C Blok Zemin":["t13"],"Bahçe":["t37"]},"2026-10-23":{"A Blok":["t5"],"B Blok":["t31"],"C Blok":["t12"],"C Blok Zemin":["t41"],"Bahçe":["t34"]},"2026-10-26":{"A Blok":["t6"],"B Blok":["t32"],"C Blok":["t8"],"Bahçe":["t11"]},"2026-10-27":{"A Blok":["t7"],"B Blok":["t30"],"C Blok":["t9"],"C Blok Zemin":["t14"],"Bahçe":["t33"]},"2026-10-28":{"A Blok":["t4"],"B Blok":["t29"],"C Blok":["t41"],"C Blok Zemin":["t10"],"Bahçe":["t34","t35"]},"2026-10-30":{"A Blok":["t5"],"B Blok":["t31"],"C Blok":["t13"],"C Blok Zemin":["t12"],"Bahçe":["t37"]},"2026-11-02":{"A Blok":["t6"],"B Blok":["t32"],"C Blok":["t11"],"C Blok Zemin":["t8"],"Bahçe":["t29"]},"2026-11-03":{"A Blok":["t7"],"B Blok":["t30"],"C Blok":["t14"],"C Blok Zemin":["t9"],"Bahçe":["t33"]},"2026-11-04":{"A Blok":["t4"],"B Blok":["t29"],"C Blok":["t41"],"C Blok Zemin":["t10"],"Bahçe":["t34"]},"2026-11-05":{"A Blok":["t5"],"B Blok":["t35"],"C Blok":["t13"],"C Blok Zemin":["t11"],"Bahçe":["t37"]},"2026-11-06":{"A Blok":["t6"],"B Blok":["t31"],"C Blok":["t12"],"C Blok Zemin":["t14"],"Bahçe":["t30"]},"2026-11-09":{"A Blok":["t7"],"B Blok":["t32"],"C Blok":["t8"],"C Blok Zemin":["t13"],"Bahçe":["t30"]},"2026-11-10":{"A Blok":["t4"],"B Blok":["t37"],"C Blok":["t9"],"C Blok Zemin":["t14"],"Bahçe":["t33"]},"2026-11-11":{"A Blok":["t5"],"B Blok":["t29"],"C Blok":["t10"],"C Blok Zemin":["t41"],"Bahçe":["t34"]},"2026-11-12":{"A Blok":["t6"],"B Blok":["t35"],"C Blok":["t13"],"C Blok Zemin":["t11"],"Bahçe":["t37"]},"2026-11-13":{"A Blok":["t7"],"B Blok":["t31"],"C Blok":["t9"],"C Blok Zemin":["t12"],"Bahçe":["t32"]},"2026-11-23":{"A Blok":["t4"],"B Blok":["t32"],"C Blok":["t12"],"C Blok Zemin":["t8"],"Bahçe":["t31"]},"2026-11-24":{"A Blok":["t5"],"B Blok":["t30"],"C Blok":["t14"],"C Blok Zemin":["t9"],"Bahçe":["t33"]},"2026-11-25":{"A Blok":["t6"],"B Blok":["t29"],"C Blok":["t41"],"C Blok Zemin":["t10"],"Bahçe":["t34"]},"2026-11-26":{"A Blok":["t7"],"B Blok":["t35"],"C Blok":["t11"],"C Blok Zemin":["t13"],"Bahçe":["t37"]},"2026-11-27":{"A Blok":["t4"],"B Blok":["t31"],"C Blok":["t12"],"C Blok Zemin":["t8"],"Bahçe":["t33"]},"2026-11-30":{"A Blok":["t5"],"B Blok":["t32"],"C Blok":["t8"],"C Blok Zemin":["t10"],"Bahçe":["t34"]},"2026-12-01":{"A Blok":["t6"],"B Blok":["t30"],"C Blok":["t9"],"C Blok Zemin":["t14"],"Bahçe":["t33"]},"2026-12-02":{"A Blok":["t7"],"B Blok":["t29"],"C Blok":["t10"],"C Blok Zemin":["t41"],"Bahçe":["t34"]},"2026-12-03":{"A Blok":["t4"],"B Blok":["t35"],"C Blok":["t13"],"C Blok Zemin":["t11"],"Bahçe":["t37"]},"2026-12-04":{"A Blok":["t5"],"B Blok":["t31"],"C Blok":["t41"],"C Blok Zemin":["t12"],"Bahçe":["t29"]},"2026-12-07":{"A Blok":["t6"],"B Blok":["t32"],"C Blok":["t11"],"C Blok Zemin":["t8"],"Bahçe":["t35"]},"2026-12-08":{"A Blok":["t7"],"B Blok":["t30"],"C Blok":["t14"],"C Blok Zemin":["t9"],"Bahçe":["t33"]},"2026-12-09":{"A Blok":["t4"],"B Blok":["t29"],"C Blok":["t10"],"C Blok Zemin":["t41"],"Bahçe":["t34"]},"2026-12-10":{"A Blok":["t5"],"B Blok":["t35"],"C Blok":["t11"],"C Blok Zemin":["t13"],"Bahçe":["t37"]},"2026-12-11":{"A Blok":["t6"],"B Blok":["t31"],"C Blok":["t12"],"C Blok Zemin":["t14"],"Bahçe":["t30"]},"2026-12-14":{"A Blok":["t7"],"B Blok":["t32"],"C Blok":["t8"],"C Blok Zemin":["t13"],"Bahçe":["t30"]},"2026-12-15":{"A Blok":["t4"],"B Blok":["t37"],"C Blok":["t9"],"C Blok Zemin":["t14"],"Bahçe":["t33"]},"2026-12-16":{"A Blok":["t5"],"B Blok":["t29"],"C Blok":["t41"],"C Blok Zemin":["t10"],"Bahçe":["t34"]},"2026-12-17":{"A Blok":["t6"],"B Blok":["t35"],"C Blok":["t13"],"C Blok Zemin":["t11"],"Bahçe":["t37"]},"2026-12-18":{"A Blok":["t7"],"B Blok":["t31"],"C Blok":["t9"],"C Blok Zemin":["t12"],"Bahçe":["t32"]},"2026-12-21":{"A Blok":["t4"],"B Blok":["t32"],"C Blok":["t12"],"C Blok Zemin":["t8"],"Bahçe":["t34"]},"2026-12-22":{"A Blok":["t5"],"B Blok":["t30"],"C Blok":["t14"],"C Blok Zemin":["t9"],"Bahçe":["t33"]},"2026-12-23":{"A Blok":["t6"],"B Blok":["t29"],"C Blok":["t10"],"C Blok Zemin":["t41"],"Bahçe":["t34"]},"2026-12-24":{"A Blok":["t7"],"B Blok":["t35"],"C Blok":["t13"],"C Blok Zemin":["t11"],"Bahçe":["t37"]},"2026-12-25":{"A Blok":["t4"],"B Blok":["t31"],"C Blok":["t12"],"C Blok Zemin":["t8"],"Bahçe":["t33"]},"2026-12-28":{"A Blok":["t5"],"B Blok":["t32"],"C Blok":["t8"],"C Blok Zemin":["t12"],"Bahçe":["t31"]},"2026-12-29":{"A Blok":["t6"],"B Blok":["t30"],"C Blok":["t14"],"C Blok Zemin":["t9"],"Bahçe":["t33"]},"2026-12-30":{"A Blok":["t7"],"B Blok":["t29"],"C Blok":["t41"],"C Blok Zemin":["t10"],"Bahçe":["t34"]},"2026-12-31":{"A Blok":["t4"],"B Blok":["t35"],"C Blok":["t11"],"C Blok Zemin":["t13"],"Bahçe":["t37"]},"2027-01-04":{"A Blok":["t5"],"B Blok":["t32"],"C Blok":["t8"],"C Blok Zemin":["t10"],"Bahçe":["t29"]},"2027-01-05":{"A Blok":["t6"],"B Blok":["t30"],"C Blok":["t9"],"C Blok Zemin":["t14"],"Bahçe":["t33"]},"2027-01-06":{"A Blok":["t7"],"B Blok":["t29"],"C Blok":["t10"],"C Blok Zemin":["t41"],"Bahçe":["t34"]},"2027-01-07":{"A Blok":["t4"],"B Blok":["t35"],"C Blok":["t13"],"C Blok Zemin":["t11"],"Bahçe":["t37"]},"2027-01-08":{"A Blok":["t5"],"B Blok":["t31"],"C Blok":["t41"],"C Blok Zemin":["t12"],"Bahçe":["t30"]},"2027-01-11":{"A Blok":["t6"],"B Blok":["t32"],"C Blok":["t11"],"C Blok Zemin":["t8"],"Bahçe":["t35"]},"2027-01-12":{"A Blok":["t7"],"B Blok":["t30"],"C Blok":["t14"],"C Blok Zemin":["t9"],"Bahçe":["t33"]},"2027-01-13":{"A Blok":["t4"],"B Blok":["t29"],"C Blok":["t10"],"C Blok Zemin":["t41"],"Bahçe":["t34"]},"2027-01-14":{"A Blok":["t5"],"B Blok":["t35"],"C Blok":["t11"],"C Blok Zemin":["t13"],"Bahçe":["t37"]},"2027-01-15":{"A Blok":["t6"],"B Blok":["t31"],"C Blok":["t12"],"C Blok Zemin":["t14"],"Bahçe":["t32"]},"2027-01-18":{"A Blok":["t7"],"B Blok":["t32"],"C Blok":["t8"],"C Blok Zemin":["t13"],"Bahçe":["t31"]},"2027-01-19":{"A Blok":["t4"],"B Blok":["t37"],"C Blok":["t9"],"C Blok Zemin":["t14"],"Bahçe":["t33"]},"2027-01-20":{"A Blok":["t5"],"B Blok":["t29"],"C Blok":["t41"],"C Blok Zemin":["t10"],"Bahçe":["t34"]},"2027-01-21":{"A Blok":["t6"],"B Blok":["t35"],"C Blok":["t13"],"C Blok Zemin":["t11"],"Bahçe":["t37"]},"2027-01-22":{"A Blok":["t7"],"B Blok":["t31"],"C Blok":["t9"],"C Blok Zemin":["t12"],"Bahçe":["t30"]}}},"adminByDate":{"2026-09-14":"Emrah Pekşen","2026-09-15":"Ayşegül Şölen","2026-09-16":"Emrah Pekşen","2026-09-17":"Ayşegül Şölen","2026-09-18":"Emrah Pekşen","2026-09-21":"Ayşegül Şölen","2026-09-22":"Emrah Pekşen","2026-09-23":"Ayşegül Şölen","2026-09-24":"Emrah Pekşen","2026-09-25":"Ayşegül Şölen","2026-09-28":"Emrah Pekşen","2026-09-29":"Ayşegül Şölen","2026-09-30":"Emrah Pekşen","2026-10-01":"Ayşegül Şölen","2026-10-02":"Emrah Pekşen","2026-10-05":"Ayşegül Şölen","2026-10-06":"Emrah Pekşen","2026-10-07":"Ayşegül Şölen","2026-10-08":"Emrah Pekşen","2026-10-09":"Ayşegül Şölen","2026-10-12":"Emrah Pekşen","2026-10-13":"Ayşegül Şölen","2026-10-14":"Emrah Pekşen","2026-10-15":"Ayşegül Şölen","2026-10-16":"Emrah Pekşen","2026-10-19":"Ayşegül Şölen","2026-10-20":"Emrah Pekşen","2026-10-21":"Ayşegül Şölen","2026-10-22":"Emrah Pekşen","2026-10-23":"Ayşegül Şölen","2026-10-26":"Emrah Pekşen","2026-10-27":"Ayşegül Şölen","2026-10-28":"Emrah Pekşen","2026-10-30":"Ayşegül Şölen","2026-11-02":"Ayşegül Şölen","2026-11-03":"Emrah Pekşen","2026-11-04":"Ayşegül Şölen","2026-11-05":"Emrah Pekşen","2026-11-06":"Ayşegül Şölen","2026-11-09":"Emrah Pekşen","2026-11-10":"Ayşegül Şölen","2026-11-11":"Emrah Pekşen","2026-11-12":"Ayşegül Şölen","2026-11-13":"Emrah Pekşen","2026-11-23":"Ayşegül Şölen","2026-11-24":"Emrah Pekşen","2026-11-25":"Ayşegül Şölen","2026-11-26":"Emrah Pekşen","2026-11-27":"Ayşegül Şölen","2026-11-30":"Emrah Pekşen","2026-12-01":"Ayşegül Şölen","2026-12-02":"Emrah Pekşen","2026-12-03":"Ayşegül Şölen","2026-12-04":"Emrah Pekşen","2026-12-07":"Ayşegül Şölen","2026-12-08":"Emrah Pekşen","2026-12-09":"Ayşegül Şölen","2026-12-10":"Emrah Pekşen","2026-12-11":"Ayşegül Şölen","2026-12-14":"Emrah Pekşen","2026-12-15":"Ayşegül Şölen","2026-12-16":"Emrah Pekşen","2026-12-17":"Ayşegül Şölen","2026-12-18":"Emrah Pekşen","2026-12-21":"Ayşegül Şölen","2026-12-22":"Emrah Pekşen","2026-12-23":"Ayşegül Şölen","2026-12-24":"Emrah Pekşen","2026-12-25":"Ayşegül Şölen","2026-12-28":"Emrah Pekşen","2026-12-29":"Ayşegül Şölen","2026-12-30":"Emrah Pekşen","2026-12-31":"Ayşegül Şölen","2027-01-04":"Ayşegül Şölen","2027-01-05":"Emrah Pekşen","2027-01-06":"Ayşegül Şölen","2027-01-07":"Emrah Pekşen","2027-01-08":"Ayşegül Şölen","2027-01-11":"Emrah Pekşen","2027-01-12":"Ayşegül Şölen","2027-01-13":"Emrah Pekşen","2027-01-14":"Ayşegül Şölen","2027-01-15":"Emrah Pekşen","2027-01-18":"Ayşegül Şölen","2027-01-19":"Emrah Pekşen","2027-01-20":"Ayşegül Şölen","2027-01-21":"Emrah Pekşen","2027-01-22":"Ayşegül Şölen"},"generated":"10.09.2026"};
 var FBC={apiKey:"AIzaSyCYxyZJhXD-BVnBwXi8jsFGmFUVrWzH-IY",authDomain:"nobet-cizelgesi-cfd5a.firebaseapp.com",projectId:"nobet-cizelgesi-cfd5a",storageBucket:"nobet-cizelgesi-cfd5a.firebasestorage.app",messagingSenderId:"846433092864",appId:"1:846433092864:web:d6b659875ab9b5ee2edfe5"};
@@ -314,6 +339,243 @@ function renderWeek(){
 }
 renderWeek();
 renderFaq();
+// ================= SANAL ASİSTAN =================
+(function(){
+var panel=document.getElementById('asst'),btn=document.getElementById('asstBtn');
+if(!panel||!btn)return;
+var msgs=document.getElementById('amsgs'),ain=document.getElementById('ain');
+btn.addEventListener('click',function(){panel.classList.toggle('open');if(panel.classList.contains('open'))ain.focus();});
+document.getElementById('asstClose').addEventListener('click',function(){panel.classList.remove('open');});
+function add(cls,html){var d=document.createElement('div');d.className=cls;d.innerHTML=html;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
+function bot(h){add('mb',h);}
+function usr(t){add('mu',esc(t));}
+var TRMAP={'ç':'c','ş':'s','ğ':'g','ü':'u','ö':'o','ı':'i','î':'i','â':'a','û':'u'};
+function norm(s){
+  s=String(s).toLocaleLowerCase('tr');
+  var out='';var i,ch;
+  for(i=0;i<s.length;i++){ch=s[i];out+=(TRMAP[ch]||ch);}
+  var res='';
+  for(i=0;i<out.length;i++){ch=out[i];res+=((ch>='a'&&ch<='z')||(ch>='0'&&ch<='9'))?ch:' ';}
+  return res.replace(/  +/g,' ').trim();
+}
+var MN=['ocak','subat','mart','nisan','mayis','haziran','temmuz','agustos','eylul','ekim','kasim','aralik'];
+var WDN=['pazar','pazartesi','sali','carsamba','persembe','cuma','cumartesi'];
+function inTerm(d){return d>=DATA.term.start&&d<=DATA.term.end;}
+function findDate(q){
+  if(q.indexOf('bugun')>=0)return iso(new Date());
+  if(q.indexOf('yarin')>=0){var d=new Date();d.setDate(d.getDate()+1);return iso(d);}
+  var w=q.split(' '),i;
+  for(i=0;i<w.length;i++){
+    var n=parseInt(w[i],10);
+    if(n>=1&&n<=31&&String(n)===w[i]&&i+1<w.length){
+      var mi=MN.indexOf(w[i+1]);
+      if(mi<0){var n2=parseInt(w[i+1],10);if(n2>=1&&n2<=12&&String(n2)===w[i+1])mi=n2-1;}
+      if(mi>=0){
+        var y1=dfi(DATA.term.start).getFullYear(),y2=dfi(DATA.term.end).getFullYear();
+        var c1=iso(new Date(y1,mi,n)),c2=iso(new Date(y2,mi,n));
+        if(inTerm(c1))return c1;
+        if(inTerm(c2))return c2;
+        return c1;
+      }
+    }
+  }
+  // gün adları: kelime bazlı, Türkçe ek toleranslı (salih ≠ salı, cumartesi ≠ cuma)
+  var ORDER=[1,2,3,4,5,6,0].sort(function(a,b){return WDN[b].length-WDN[a].length;});
+  var SUF='aeiuylnrdtks';
+  function isDayWord(word,wd){
+    if(word===wd)return true;
+    if(word.indexOf(wd)!==0)return false;
+    var rest=word.slice(wd.length);
+    for(var k=0;k<rest.length;k++)if(SUF.indexOf(rest[k])<0)return false;
+    return rest.length>0&&rest.length<=4;
+  }
+  for(var wi3=0;wi3<w.length;wi3++){
+    for(var oi=0;oi<ORDER.length;oi++){
+      var di=ORDER[oi];
+      if(isDayWord(w[wi3],WDN[di])){
+        var d2=new Date();var ahead=(di-d2.getDay()+7)%7;
+        if((q.indexOf('onumuzdeki')>=0||q.indexOf('gelecek')>=0||q.indexOf('haftaya')>=0)&&ahead===0)ahead=7;
+        d2.setDate(d2.getDate()+ahead);
+        return iso(d2);
+      }
+    }
+  }
+  return null;
+}
+function curWeekIdx(){var t0=iso(new Date());for(var i=0;i<weeks.length;i++){if(t0<=weeks[i].days[weeks[i].days.length-1])return i;}return weeks.length-1;}
+function findWeek(q){
+  var w=q.split(' ');
+  for(var i=0;i<w.length;i++){var n=parseInt(w[i],10);if(n>=1&&n<=weeks.length&&String(n)===w[i]&&i+1<w.length&&w[i+1].indexOf('hafta')===0)return n-1;}
+  if(q.indexOf('bu hafta')>=0)return curWeekIdx();
+  if(q.indexOf('gelecek hafta')>=0||q.indexOf('onumuzdeki hafta')>=0||q.indexOf('haftaya')>=0)return Math.min(curWeekIdx()+1,weeks.length-1);
+  if(q.indexOf('gecen hafta')>=0)return Math.max(curWeekIdx()-1,0);
+  return -1;
+}
+function findTeacher(q){
+  var words=q.split(' ');var best=0,ties=[];
+  DATA.teachers.forEach(function(t){
+    var toks=norm(t.name).split(' ');var sc=0;
+    toks.forEach(function(tok){if(tok.length>=3&&words.indexOf(tok)>=0)sc++;});
+    if(sc>best){best=sc;ties=[t];}
+    else if(sc===best&&sc>0)ties.push(t);
+  });
+  if(!best)return null;
+  return {t:ties[0],ties:ties};
+}
+function itemsOf(t){
+  var sched=DATA.schedules[t.group]||{};var items=[];
+  Object.keys(sched).sort().forEach(function(d){
+    AREAS.forEach(function(a){if(((sched[d]&&sched[d][a])||[]).indexOf(t.id)>=0)items.push({date:d,area:a});});
+  });
+  return items;
+}
+function nextOf(t){var its=itemsOf(t),t0=iso(new Date());for(var i=0;i<its.length;i++)if(its[i].date>=t0)return its[i];return null;}
+function fmtItem(x){return '<b>'+fmtTR(x.date)+' '+dayName(x.date)+'</b> — '+x.area;}
+function dayAnswer(d,focusT){
+  if(!inTerm(d))return fmtTR(d)+' tarihi dönem aralığının dışında (dönem: '+fmtTR(DATA.term.start)+' – '+fmtTR(DATA.term.end)+').';
+  var dw=dfi(d).getDay();
+  if(dw===0||dw===6)return fmtTR(d)+' '+dayName(d)+' — hafta sonu, nöbet yok.';
+  if(HM[d])return fmtTR(d)+' '+dayName(d)+' — <b>TATİL</b> ('+esc(HM[d])+'), nöbet yazılmaz.';
+  var h='<b>'+fmtTR(d)+' '+dayName(d)+'</b>';
+  if(focusT){
+    var its=itemsOf(focusT).filter(function(x){return x.date===d;});
+    h+='<br>'+esc(focusT.name)+': '+(its.length?its.map(function(x){return '<b>'+x.area+'</b> alanında nöbetçi';}).join(', '):'bu gün nöbeti yok');
+    return h;
+  }
+  groups.forEach(function(g){
+    var sched=DATA.schedules[g];h+='<br><u>'+esc(SHIFT[g]||g)+'</u>';
+    AREAS.forEach(function(a){
+      var ids=(sched[d]&&sched[d][a])||[];
+      h+='<br>'+a+': '+(ids.map(function(id){var t=byId[id];return t?('<b>'+esc(t.name)+'</b>'):'?';}).join(', ')||'—');
+    });
+    h+='<br>';
+  });
+  if(DATA.adminByDate&&DATA.adminByDate[d])h+='Nöbetçi Müdür Yrd.: <b>'+esc(DATA.adminByDate[d])+'</b>';
+  return h;
+}
+function holAnswer(){
+  var hs=(DATA.holidays||[]).slice().sort(function(a,b){return a.date<b.date?-1:1;});
+  if(!hs.length)return 'Bu dönem için tanımlı resmi tatil yok.';
+  var out=[],cg=null;
+  hs.forEach(function(hh){
+    if(cg&&cg.label===hh.label)cg.end=hh.date;
+    else{cg={label:hh.label,start:hh.date,end:hh.date};out.push(cg);}
+  });
+  var t0=iso(new Date()),nh=null;
+  for(var i=0;i<hs.length;i++)if(hs[i].date>=t0){nh=hs[i];break;}
+  var h='Bu dönemdeki resmi tatiller:';
+  out.forEach(function(g){h+='<br>• '+esc(g.label)+': '+(g.start===g.end?fmtTR(g.start):fmtTR(g.start)+' – '+fmtTR(g.end));});
+  if(nh)h+='<br><br>Sıradaki tatil: <b>'+esc(nh.label)+'</b> ('+fmtTR(nh.date)+'). Tatil günlerine nöbet yazılmaz.';
+  return h;
+}
+var ESAS=[];
+(function(){var lis=document.querySelectorAll('.esas li');for(var i=0;i<lis.length;i++)ESAS.push(lis[i].textContent);})();
+var STOPW={'nobet':1,'nobetci':1,'nobetim':1,'ogretmen':1,'nasil':1,'nedir':1,'icin':1,'gerekir':1,'zaman':1,'olur':1,'olursa':1,'hangi':1,'gunu':1,'gunler':1,'yapmam':1,'lazim':1};
+function esasSearch(q){
+  var words=q.split(' ').filter(function(w){return w.length>=4&&!STOPW[w];});
+  if(!words.length)return [];
+  var sc=[];
+  ESAS.forEach(function(txt,i){var n=norm(txt),s=0;words.forEach(function(w){if(n.indexOf(w)>=0)s++;});if(s)sc.push({i:i,s:s});});
+  sc.sort(function(a,b){return b.s-a.s;});
+  return sc.slice(0,2).map(function(x){return '<b>Madde '+(x.i+1)+':</b> '+esc(ESAS[x.i]);});
+}
+function reply(qraw){
+  var q=norm(qraw);
+  if(!q)return 'Sorunuzu yazabilirsiniz.';
+  var words=q.split(' ');
+  function has(){for(var i=0;i<arguments.length;i++)if(q.indexOf(arguments[i])>=0)return true;return false;}
+  if(has('merhaba','selam','gunaydin','naber','nasilsin')&&q.length<=30)
+    return 'Merhaba! 👋 Nöbet çizelgesiyle ilgili sorularınızı yanıtlarım. Aşağıdaki hazır sorulara dokunabilir veya kendi cümlenizle sorabilirsiniz.';
+  if(has('tesekkur','sagol','eyvallah','tsk'))return 'Rica ederim! Başka sorunuz olursa buradayım. 😊';
+  var named=findTeacher(q);
+  if(named&&named.ties.length>1&&named.ties.length<=5)
+    return 'Hangi öğretmeni sordunuz? '+named.ties.map(function(t){return '<b>'+esc(t.name)+'</b> ('+t.group+')';}).join(' • ')+'<br>Adı ve soyadıyla tekrar sorabilirsiniz.';
+  var T=(named&&named.ties.length===1)?named.t:(who.value?byId[who.value]:null);
+  var mine=(named&&named.ties.length===1)||words.indexOf('ben')>=0||has('benim','nobetim','nobetlerim');
+  var d=findDate(q);
+  if(has('mudur')){
+    if(!DATA.adminByDate||!Object.keys(DATA.adminByDate).length)return 'Müdür yardımcısı nöbeti bu çizelgede tanımlı değil.';
+    var dd=d||iso(new Date());
+    if(!inTerm(dd))return fmtTR(dd)+' dönem aralığının dışında.';
+    if(dfi(dd).getDay()===0||dfi(dd).getDay()===6||HM[dd])return fmtTR(dd)+' günü okul kapalı (tatil / hafta sonu); nöbetçi müdür yardımcısı yok.';
+    var nm=DATA.adminByDate[dd];
+    return nm?(fmtTR(dd)+' '+dayName(dd)+' günü nöbetçi müdür yardımcısı: <b>'+esc(nm)+'</b>'):'Bu tarih için kayıt bulamadım.';
+  }
+  if(has('tatil','yariyil','bayram')&&!d)return holAnswer();
+  if(has('donem')&&has('basl','bit','sure','kac hafta'))
+    return 'Dönem: <b>'+esc(DATA.term.name||'')+'</b><br>Başlangıç: <b>'+fmtTR(DATA.term.start)+'</b><br>Bitiş: <b>'+fmtTR(DATA.term.end)+'</b><br>Toplam '+weeks.length+' hafta.';
+  if(has('cift')){
+    if(!T)return 'Çift nöbet haftalarını söyleyebilmem için sayfanın üstünden adınızı seçin veya öğretmen adıyla sorun.';
+    var gs=groupStats(T.group),ws=gs.dblw[T.id]||[];
+    var rule='Genel kural: çift nöbetin iki günü arasında en az 3 gün bırakılır (Pzt–Per, Pzt–Cum, Sal–Cum). Sabit günü Çarşamba olanlar ile idarece özel gün tercihi tanımlananlar istisnadır.';
+    if(!ws.length)return '<b>'+esc(T.name)+'</b> için bu dönem çift nöbet görünmüyor.<br><br>'+rule;
+    var its=itemsOf(T),per={};
+    its.forEach(function(x){var wi2=wIndexOf(x.date);(per[wi2]=per[wi2]||[]).push(x);});
+    var rows='';
+    ws.forEach(function(wno){var arr=per[wno-1]||[];rows+='<br>• '+wno+'. hafta: '+arr.map(function(x){return dayName(x.date)+' '+fmtShort(x.date)+' ('+x.area+')';}).join(' + ');});
+    return '<b>'+esc(T.name)+'</b> için <b>'+ws.length+' hafta</b> çift nöbet var:'+rows+'<br><br>'+rule;
+  }
+  if(d){
+    if(mine&&T)return dayAnswer(d,T);
+    return dayAnswer(d,null);
+  }
+  var wk=findWeek(q);
+  if(wk>=0){
+    var wd2=weeks[wk].days;
+    if(mine&&T){
+      var its2=itemsOf(T).filter(function(x){return x.date>=wd2[0]&&x.date<=wd2[wd2.length-1];});
+      return (wk+1)+'. haftada ('+fmtShort(wd2[0])+' – '+fmtShort(wd2[wd2.length-1])+') <b>'+esc(T.name)+'</b> için '+(its2.length?'nöbetler:<br>'+its2.map(function(x){return '• '+dayName(x.date)+' '+fmtShort(x.date)+' — '+x.area;}).join('<br>'):'nöbet yok.');
+    }
+    cur=wk;wsel.value=wk;renderWeek();
+    return (wk+1)+'. haftanın ('+fmtShort(wd2[0])+' – '+fmtShort(wd2[wd2.length-1])+') tam çizelgesini sayfadaki haftalık tabloda açtım. 👇 Belirli bir gün için örn. "Salı kim nöbetçi" diye sorabilirsiniz.';
+  }
+  if(has('siradaki','sonraki','ne zaman')){
+    if(T){
+      var nx=nextOf(T);
+      var kim=(named&&named.ties.length===1)?('<b>'+esc(T.name)+'</b> için sıradaki nöbet: '):'Sıradaki nöbetiniz: ';
+      return nx?(kim+fmtItem(nx)):('Dönem sonuna kadar '+esc(T.name)+' için nöbet kalmamış görünüyor.');
+    }
+    return 'Adınızı sayfanın üstünden seçin veya öğretmen adıyla sorun (örn: Salih Sevgi ne zaman nöbetçi?).';
+  }
+  if(has('kac nobet','toplam','listele','hepsi','tum nobet','butun nobet','nobetlerim')){
+    if(!T)return 'Adınızı seçerseniz tüm nöbetlerinizi listeleyebilirim.';
+    var its3=itemsOf(T),gs2=groupStats(T.group);
+    var rows2='';
+    its3.forEach(function(x,i2){rows2+='<br>'+(i2+1)+'. '+fmtShort(x.date)+' '+dayName(x.date)+' — '+x.area;});
+    return '<b>'+esc(T.name)+'</b> — toplam <b>'+its3.length+'</b> nöbet, '+((gs2.dblw[T.id]||[]).length)+' hafta çift nöbet:'+rows2;
+  }
+  if(has('alan','blok','bahce','nerede')){
+    var h2='';
+    if(T){
+      var nx2=nextOf(T);
+      if(nx2)h2='<b>'+esc(T.name)+'</b> için sıradaki nöbet alanı: <b>'+nx2.area+'</b> ('+fmtTR(nx2.date)+' '+dayName(nx2.date)+').<br><br>';
+    }
+    return h2+'Nöbet alanları: '+AREAS.join(', ')+'.<br>Kurallar: A Blok öğretmenleri yalnız A Blok alanında görev yapar; B Blok öğretmenleri B Blok ve Bahçe; C Blok öğretmenleri C Blok, C Blok Zemin ve Bahçe alanlarında dönüşümlü görev yapar.';
+  }
+  if(has('degistir','degisiklik','takas','devret','devir'))
+    return 'Çizelgede değişikliği yalnızca idare yapabilir; talebinizi müdür yardımcısına iletin. Ani bir mazeret durumunda ise esaslara göre okul idaresinin izni ile nöbet başka bir öğretmene devredilebilir (Madde 3).';
+  if(has('neden')&&has('iki','2 '))
+    return 'Okulda her gün '+AREAS.length+' nöbet alanı vardır; haftada '+(AREAS.length*5)+' nöbet yeri oluşur. Gruptaki öğretmen sayısı bundan az olduğu için herkes 1 nöbet aldıktan sonra kalan yerler sırayla çift nöbet olarak dağıtılır; sıra kuyruğu sayesinde kimseye üst üste haftalarda çift nöbet gelmez.';
+  var es=esasSearch(q);
+  if(has('esas','kural','madde')||es.length){
+    if(es.length)return 'İlgili esaslar:<br><br>'+es.join('<br><br>')+'<br><br>Tüm 24 madde sayfadaki 📜 bölümünde yer alır.';
+    return 'Nöbet esasları (24 madde) sayfadaki 📜 <b>Nöbetlerde Uygulanacak Esaslar</b> bölümünde listelenir. Belirli bir konuyu sorabilirsiniz (örn: nöbet defteri, boş ders, teneffüs).';
+  }
+  if(named&&named.ties.length===1){
+    var nx3=nextOf(named.t);
+    return nx3?('<b>'+esc(named.t.name)+'</b> ('+named.t.block+' Blok, '+named.t.group+') için sıradaki nöbet: '+fmtItem(nx3)):('<b>'+esc(named.t.name)+'</b> için dönem sonuna kadar nöbet kalmamış görünüyor.');
+  }
+  return 'Bunu tam anlayamadım. 🙏 Şunları sorabilirsiniz:<br>• Sıradaki nöbetim ne zaman?<br>• Bugün / yarın / 15 Ekim kim nöbetçi?<br>• Çift nöbet haftalarım hangileri?<br>• Bu hafta nöbetlerim<br>• Tatiller ne zaman?<br>• Nöbetçi müdür yardımcısı kim?<br>• Nöbet defteri ile ilgili kurallar neler?';
+}
+var CHIPS=['Sıradaki nöbetim ne zaman?','Bu hafta nöbetlerim','Çift nöbet haftalarım','Bugün kim nöbetçi?','Tatiller ne zaman?','Nöbetçi müdür yardımcısı kim?'];
+var chipBox=document.getElementById('achips');
+CHIPS.forEach(function(c){var b=document.createElement('button');b.textContent=c;b.addEventListener('click',function(){ask(c);});chipBox.appendChild(b);});
+function ask(qq){usr(qq);setTimeout(function(){bot(reply(qq));},180);}
+document.getElementById('asend').addEventListener('click',function(){var v=ain.value.trim();if(!v)return;ain.value='';ask(v);});
+ain.addEventListener('keydown',function(e){if(e.key==='Enter'){var v=ain.value.trim();if(!v)return;ain.value='';ask(v);}});
+bot('Merhaba! 👋 Ben <b>nöbet asistanı</b>. Çizelge verilerine bakarak sorularınızı yanıtlarım. Sayfanın üstünden adınızı seçerseniz cevaplarım size özel olur.');
+window.__asstReply=reply;
+})();
 }
 (function(){
   try{
