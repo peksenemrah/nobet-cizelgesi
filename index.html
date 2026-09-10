@@ -66,7 +66,9 @@ details.faq .ans{font-size:13.5px;color:#334155;line-height:1.55;margin:8px 2px 
 .arow{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line);background:#fff}
 .arow input{flex:1;min-width:0;font:inherit;padding:9px 11px;border:1px solid var(--line);border-radius:9px}
 .arow button{background:var(--accent);color:#fff;border:none;border-radius:9px;padding:9px 14px}
-@media print{#asstBtn,#asst{display:none}}
+#asstHint{display:none;position:fixed;right:16px;bottom:84px;z-index:59;background:#fff;border:1px solid #c7d2fe;box-shadow:0 6px 18px rgba(15,23,42,.18);border-radius:14px;border-bottom-right-radius:4px;padding:10px 13px;font-size:13px;line-height:1.4;max-width:230px;cursor:pointer;animation:asstNudge 2.2s ease infinite}
+@keyframes asstNudge{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@media print{#asstBtn,#asst,#asstHint{display:none}}
 </style>
 </head>
 <body>
@@ -120,6 +122,7 @@ details.faq .ans{font-size:13.5px;color:#334155;line-height:1.55;margin:8px 2px 
 <div class="foot" id="gen"></div>
 </main>
 <button id="asstBtn" title="Nöbet Asistanı">💬</button>
+<div id="asstHint">🤖 Merhaba! Nöbetlerinizle ilgili sorularınızı bana sorabilirsiniz.</div>
 <div id="asst">
   <div class="ahead"><b>🤖 Nöbet Asistanı</b><button id="asstClose" title="Kapat">✕</button></div>
   <div id="amsgs"></div>
@@ -608,7 +611,18 @@ function ask(qq){usr(qq);setTimeout(function(){bot(reply(qq));},180);}
 document.getElementById('asend').addEventListener('click',function(){var v=ain.value.trim();if(!v)return;ain.value='';ask(v);});
 ain.addEventListener('keydown',function(e){if(e.key==='Enter'){var v=ain.value.trim();if(!v)return;ain.value='';ask(v);}});
 bot('Merhaba! 👋 Ben <b>nöbet asistanı</b>. Çizelge verilerine bakarak sorularınızı yanıtlarım. Sayfanın üstünden adınızı seçerseniz cevaplarım size özel olur.');
-setTimeout(function(){panel.classList.add('open');},700);
+// Masaüstünde panel otomatik açılır; mobilde açılmaz, bunun yerine küçük bir hatırlatma balonu çıkar.
+(function(){
+  var hint=document.getElementById('asstHint');
+  var isMobile=window.innerWidth<=640;
+  if(!isMobile){setTimeout(function(){panel.classList.add('open');},700);if(hint)hint.remove();return;}
+  if(!hint)return;
+  var hideHint=function(){hint.style.display='none';};
+  setTimeout(function(){if(!panel.classList.contains('open'))hint.style.display='block';},1200);
+  setTimeout(hideHint,14000);
+  hint.addEventListener('click',function(){hideHint();panel.classList.add('open');ain.focus();});
+  btn.addEventListener('click',hideHint);
+})();
 window.__asstReply=reply;
 })();
 }
